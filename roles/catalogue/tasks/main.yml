@@ -1,0 +1,21 @@
+- name: Load NodeJS
+  ansible.builtin.roles:
+    name: common
+    tasks_from: nodejs    
+
+
+- name: Copy MongoDB Repo file
+  ansible.builtin.template:
+    src: mongo.repo 
+    dst: /etc/yum.repos.d/mongo.repo
+
+
+- name: Install MongoDB
+  ansible.builtin.dnf:
+    name: mongodb-mongosh
+    state: installed
+
+- name: Load Master Data
+  ansible.builtin.shell: mongosh --host mongodb-{{ env }}.shpatil17.online </app/db/master-data.js
+
+  
